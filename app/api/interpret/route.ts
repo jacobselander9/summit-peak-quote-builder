@@ -6,6 +6,8 @@ import { loadDataset } from "@/lib/data/load";
 import { friendlyApiError, interpretNotes } from "@/lib/ai/interpret";
 
 export const runtime = "nodejs";
+// Reading notes usually takes 5-15 s; allow up to 60 s before Vercel gives up.
+export const maxDuration = 60;
 
 const BodySchema = z.object({ notes: z.string().trim().min(1).max(10_000) });
 

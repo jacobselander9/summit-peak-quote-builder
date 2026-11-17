@@ -1,9 +1,10 @@
 "use client";
 // The whole one-page app. Holds the state; every edit re-runs the pricing
 // engine right here in the browser (no API call). Only reading notes calls the server.
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Dataset } from "@/lib/data";
 import type { HeardItem, Interpretation } from "@/lib/ai/to-spec";
+import { DEMO_SCRIPTS } from "@/lib/demo/scripts";
 import { buildQuote } from "@/lib/pricing";
 import { PricingError, type EditsByOption, type JobSpecInput, type OptionKey, type Quote } from "@/lib/pricing/types";
 import {
@@ -55,6 +56,14 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
   const option = quote?.options.find((o) => o.key === selected) ?? quote?.options[0] ?? null;
 
   const manualChanges = countLineEdits(edits) + describeSpecChanges(draftSpec, spec).length;
+
+  // Escape dismisses the "replace your edits?" warning.
+  useEffect(() => {
+    if (pendingNotes === null) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setPendingNotes(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [pendingNotes]);
   const loading = status.kind === "loading";
 
   /** Re-reads notes, but first asks before throwing away manual edits. */
@@ -89,6 +98,10 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
         setSelected(isInstall ? "better" : "repair");
       }
       setStatus({ kind: "idle" });
+      // Bring the new estimate (or the agent's questions) into view.
+      requestAnimationFrame(() =>
+        document.getElementById("results")?.scrollIntoView({ behavior: "smooth", block: "start" }),
+      );
     } catch {
       setStatus({ kind: "error", message: "Couldn't reach the server. Check the connection and try again." });
     }
@@ -190,6 +203,8 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
         </div>
       )}
 
+      <div id="results" className="-mt-5 scroll-mt-4" />
+
       {!loading && questions.length > 0 && (
         <section aria-live="polite" className="rounded-2xl border-2 border-orange bg-white p-5">
           <h2 className="text-xl font-bold text-navy">
@@ -210,7 +225,7 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
         </div>
       )}
 
-      {!loading && !hasDraft && status.kind !== "error" && <EmptyState />}
+      {!loading && !hasDraft && status.kind !== "error" && <EmptyState onPick={setNotes} />}
 
       {spec && quote && option && job && (
         <>
@@ -257,11 +272,27 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
   );
 }
 
-function EmptyState() {
+function EmptyState({ onPick }: { onPick: (notes: string) => void }) {
   return (
-    <section className="rounded-2xl border-2 border-dashed border-navy-100 p-8 text-center text-lg text-slate-600">
+    <section className="rounded-2xl border-2 border-dashed border-navy-100 p-6 text-center text-lg text-slate-600 sm:p-8">
       <p className="font-semibold text-navy">Type or dictate what you&apos;re fixing, then press Build estimate.</p>
       <p className="mt-1">You&apos;ll get a priced quote in seconds. Adjust anything and the totals update instantly.</p>
+      <p className="mt-5 text-sm font-semibold uppercase tracking-wide text-slate-500">Or try a demo script</p>
+      <div className="mt-2 flex flex-wrap justify-center gap-2">
+        {DEMO_SCRIPTS.map((d, i) => (
+          <button
+            key={d.title}
+            type="button"
+            onClick={() => {
+              onPick(d.notes);
+              document.getElementById("notes")?.focus();
+            }}
+            className="rounded-full border-2 border-navy-100 bg-white px-4 py-1.5 text-base font-semibold text-navy transition hover:border-navy"
+          >
+            {i + 1}. {d.title.split(/ — | \(/)[0]}
+          </button>
+        ))}
+      </div>
     </section>
   );
 }

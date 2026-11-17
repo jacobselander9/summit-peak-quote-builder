@@ -102,6 +102,12 @@ export function LineItems({
         ))}
       </table>
 
+      {option.lines.length === 0 && (
+        <p className="mt-4 rounded-lg bg-navy-50 p-4 text-slate-600">
+          Every line has been removed. Put lines back below, or add a part from the price book.
+        </p>
+      )}
+
       {removed.length > 0 && (
         <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
           <span className="text-slate-500">Removed:</span>
