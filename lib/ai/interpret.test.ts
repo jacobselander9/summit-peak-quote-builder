@@ -142,18 +142,26 @@ describe("interpretNotes", () => {
     expect(result.spec!.parts).toEqual([{ sku: "PUMP-CND", qty: 1 }]);
   });
 
-  it("retries once when a field has neither source_text nor assumption", async () => {
+  it("sends validation errors back so Claude can fix them", async () => {
     const bad = { ...script1Input, city: { value: "Logan", source_text: "", assumption: false, assumption_reason: "" } };
     const { client, create } = fakeClient(toolResponse(bad), toolResponse(script1Input));
     const result = await interpretNotes(script1.notes, data, client);
     expect(create).toHaveBeenCalledTimes(2);
     expect(result.spec).not.toBeNull();
+    // Second request = original message + Claude's answer + an error tool_result.
+    const messages = create.mock.calls[1][0].messages;
+    expect(messages).toHaveLength(3);
+    expect(messages[1].role).toBe("assistant");
+    expect(messages[2].content[0]).toMatchObject({ type: "tool_result", tool_use_id: "toolu_1", is_error: true });
+    expect(messages[2].content[0].content).toMatch(/needs source_text or assumption/);
   });
 
-  it("gives up with a friendly error after two bad answers", async () => {
+  it("rejects values outside /data even without strict mode", async () => {
     const bad = { ...script1Input, city: heard("Salt Lake City", "SLC") };
-    const { client } = fakeClient(toolResponse(bad), toolResponse(bad));
+    const { client, create } = fakeClient(toolResponse(bad), toolResponse(bad), toolResponse(bad));
     await expect(interpretNotes(script1.notes, data, client)).rejects.toThrow(InterpretError);
+    expect(create).toHaveBeenCalledTimes(3);
+    expect(create.mock.calls[1][0].messages[2].content[0].content).toMatch(/city/);
   });
 
   it("retries when the model answers in text instead of calling the tool", async () => {
@@ -185,13 +193,14 @@ describe("interpretNotes", () => {
     await expect(interpretNotes("x", data, client)).rejects.toThrow(/declined/);
   });
 
-  it("sends a strict tool built from /data, with the model from config", async () => {
+  it("sends a tool built from /data, with the model from config", async () => {
     const { client, create } = fakeClient(toolResponse(script1Input));
     await interpretNotes(script1.notes, data, client);
     const req = create.mock.calls[0][0];
     expect(req.model).toBe(CLAUDE_MODEL);
     expect(req.tool_choice).toBeUndefined(); // forced tool choice isn't allowed on this model
-    expect(req.tools[0]).toMatchObject({ name: TOOL_NAME, strict: true });
+    expect(req.tools[0].name).toBe(TOOL_NAME);
+    expect(req.tools[0].strict).toBeUndefined(); // schema is too large for strict mode's grammar limit
     const props = req.tools[0].input_schema.properties;
     expect(props.city.properties.value.enum).toEqual([...data.rules.service_area, ""]);
     expect(props.parts.items.properties.sku.enum).toHaveLength(40);

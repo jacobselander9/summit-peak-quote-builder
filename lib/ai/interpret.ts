@@ -1,6 +1,7 @@
 // Sends the tech's notes to Claude and returns a validated Interpretation.
 // Server-only: the API key never reaches the browser.
 import Anthropic from "@anthropic-ai/sdk";
+import { z } from "zod";
 import type { Dataset } from "@/lib/data";
 import { CLAUDE_EFFORT, CLAUDE_MODEL } from "@/lib/config";
 import { buildQuote } from "@/lib/pricing";
@@ -23,7 +24,8 @@ export type MessagesClient = {
   beta: { messages: { create: Anthropic["beta"]["messages"]["create"] } };
 };
 
-const MAX_ATTEMPTS = 2; // retry once if the model answers without calling the tool
+/** One try plus up to two corrections (no tool call, or an answer that fails validation). */
+const MAX_ATTEMPTS = 3;
 
 export async function interpretNotes(
   notes: string,
@@ -33,30 +35,31 @@ export async function interpretNotes(
   const catalog = buildCatalog(data);
   const zodSchema = buildToolInputZod(catalog);
 
-  const request = {
-    model: CLAUDE_MODEL,
-    max_tokens: 16000,
-    output_config: { effort: CLAUDE_EFFORT },
-    // If a safety check declines the request, the API retries on a fallback model.
-    betas: ["server-side-fallback-2026-07-01" as const],
-    fallbacks: "default" as const,
-    // The system prompt is the same every call (built from /data), so it caches.
-    system: [
-      { type: "text" as const, text: buildSystemPrompt(data, catalog), cache_control: { type: "ephemeral" as const } },
-    ],
-    tools: [
-      {
-        name: TOOL_NAME,
-        description: TOOL_DESCRIPTION,
-        strict: true, // the API enforces the schema, including the enums from /data
-        input_schema: buildToolInputSchema(catalog) as Anthropic.Beta.BetaTool.InputSchema,
-      },
-    ],
-    messages: [{ role: "user" as const, content: buildUserMessage(notes) }],
-  };
+  // The conversation grows only if Claude needs a second try (append-only).
+  const messages: Anthropic.Beta.BetaMessageParam[] = [{ role: "user", content: buildUserMessage(notes) }];
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    const response = await client.beta.messages.create(request);
+    const response = await client.beta.messages.create({
+      model: CLAUDE_MODEL,
+      max_tokens: 16000,
+      output_config: { effort: CLAUDE_EFFORT },
+      // If a safety check declines the request, the API retries on a fallback model.
+      betas: ["server-side-fallback-2026-07-01"],
+      fallbacks: "default",
+      // The system prompt is the same every call (built from /data), so it caches.
+      system: [{ type: "text", text: buildSystemPrompt(data, catalog), cache_control: { type: "ephemeral" } }],
+      // Not strict: our schema (every SKU, city and job code as an enum) is larger
+      // than strict mode allows. The enums still steer the model, and zod below
+      // rejects anything outside /data.
+      tools: [
+        {
+          name: TOOL_NAME,
+          description: TOOL_DESCRIPTION,
+          input_schema: buildToolInputSchema(catalog) as Anthropic.Beta.BetaTool.InputSchema,
+        },
+      ],
+      messages: [...messages], // a snapshot; we append to our copy afterwards
+    });
 
     if (response.stop_reason === "refusal") {
       throw new InterpretError("The AI declined to read these notes. Try rewording them.");
@@ -68,18 +71,35 @@ export async function interpretNotes(
     const toolUse = response.content.find(
       (b): b is Anthropic.Beta.BetaToolUseBlock => b.type === "tool_use" && b.name === TOOL_NAME,
     );
-    if (!toolUse) continue; // answered in text instead of calling the tool; ask again
+    messages.push({ role: "assistant", content: response.content });
+
+    if (!toolUse) {
+      // Answered in text instead of calling the tool; ask for the tool call.
+      messages.push({ role: "user", content: `Please submit the job spec by calling the ${TOOL_NAME} tool.` });
+      continue;
+    }
 
     const parsed = zodSchema.safeParse(toolUse.input);
     if (!parsed.success) {
-      if (attempt < MAX_ATTEMPTS) continue;
-      throw new InterpretError("The AI's answer didn't match the expected format. Please try again.");
+      // Tell Claude exactly what was wrong so it can fix it on the next try.
+      messages.push({
+        role: "user",
+        content: [
+          {
+            type: "tool_result",
+            tool_use_id: toolUse.id,
+            is_error: true,
+            content: `The job spec didn't pass validation. Fix these problems and call ${TOOL_NAME} again:\n${z.prettifyError(parsed.error)}`,
+          },
+        ],
+      });
+      continue;
     }
 
     const result = toInterpretation(data, catalog, notes, parsed.data);
     return checkPriceable(data, result);
   }
-  throw new InterpretError("The AI didn't return a job spec. Please try again.");
+  throw new InterpretError("The AI couldn't produce a valid job spec. Please try again or reword the notes.");
 }
 
 /** If the engine can't price the spec, turn its error into a question instead. */

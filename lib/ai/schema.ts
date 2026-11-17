@@ -1,13 +1,15 @@
 // The shape the model must return (the input of the submit_job_spec tool).
 //
 // Two copies of the same shape:
-//  - JSON Schema sent to the API with strict: true, so the model can only pick
-//    job codes, sizes, SKUs and cities from the enums (built from /data).
-//  - zod schema we validate the answer with, plus checks JSON Schema can't do.
+//  - JSON Schema sent to the API. Its enums (job codes, sizes, SKUs, cities from
+//    /data) steer the model. It is NOT sent in strict mode: with every SKU listed,
+//    the schema is bigger than strict mode's grammar limit.
+//  - zod schema that validates every answer, so nothing outside /data gets through.
+//    Validation errors are sent back to the model to fix (see interpret.ts).
 //
-// Strict mode allows only 16 fields that can be "X or null", so this schema
-// uses NO nullable fields. "Not given" is written as an empty string "" (or 0
-// for units_removed), and zod turns those back into null for the rest of the code.
+// "Not given" is written as an empty string "" (or 0 for units_removed and
+// discount_pct) rather than null, which keeps the schema simple; zod turns those
+// back into null for the rest of the code.
 import { z } from "zod";
 import { TIMINGS } from "@/lib/pricing/types";
 import type { Catalog } from "./catalog";
