@@ -102,6 +102,11 @@ export function friendlyApiError(err: unknown): string {
   if (err instanceof Anthropic.AuthenticationError) {
     return "The Claude API key is missing or invalid. Check ANTHROPIC_API_KEY.";
   }
+  if (err instanceof Anthropic.BadRequestError) {
+    // A bug in our request, not something retrying fixes; show the API's reason.
+    const reason = (err.error as { error?: { message?: string } } | undefined)?.error?.message ?? err.message;
+    return `The Claude API rejected the request: ${reason}`;
+  }
   if (err instanceof Anthropic.RateLimitError) return "Too many requests right now. Wait a moment and try again.";
   if (err instanceof Anthropic.APIConnectionError) return "Couldn't reach the Claude API. Check the internet connection.";
   if (err instanceof Anthropic.APIError) return `The Claude API had a problem (${err.status}). Please try again.`;

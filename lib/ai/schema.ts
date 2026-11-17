@@ -4,43 +4,37 @@
 //  - JSON Schema sent to the API with strict: true, so the model can only pick
 //    job codes, sizes, SKUs and cities from the enums (built from /data).
 //  - zod schema we validate the answer with, plus checks JSON Schema can't do.
+//
+// Strict mode allows only 16 fields that can be "X or null", so this schema
+// uses NO nullable fields. "Not given" is written as an empty string "" (or 0
+// for units_removed), and zod turns those back into null for the rest of the code.
 import { z } from "zod";
 import { TIMINGS } from "@/lib/pricing/types";
 import type { Catalog } from "./catalog";
 
 export const TOOL_NAME = "submit_job_spec";
 
+/** How the model says "not in the notes / unknown". */
+export const EMPTY = "";
+
 // ---------- JSON Schema (sent to the API) ----------
 
 type JsonSchema = Record<string, unknown>;
 
-const nullable = (schema: JsonSchema): JsonSchema => ({ anyOf: [schema, { type: "null" }] });
-
 const SOURCE_FIELDS = {
-  source_text: nullable({
+  source_text: {
     type: "string",
-    description: "Exact words copied from the notes that this came from. null only if assumption is true.",
-  }),
+    description: 'Exact words copied from the notes that this came from. "" only if assumption is true or the value is "".',
+  },
   assumption: {
     type: "boolean",
     description: "true if this was not stated in the notes and you filled in a default or inferred it.",
   },
-  assumption_reason: nullable({
+  assumption_reason: {
     type: "string",
-    description: "Short reason for the assumption, e.g. 'no time of day mentioned'. null if not an assumption.",
-  }),
+    description: 'Short reason for the assumption, e.g. "no time of day mentioned". "" if not an assumption.',
+  },
 };
-const SOURCE_KEYS = Object.keys(SOURCE_FIELDS);
-
-/** { value, source_text, assumption, assumption_reason } */
-function sourced(value: JsonSchema): JsonSchema {
-  return {
-    type: "object",
-    properties: { value, ...SOURCE_FIELDS },
-    required: ["value", ...SOURCE_KEYS],
-    additionalProperties: false,
-  };
-}
 
 function object(properties: Record<string, JsonSchema>, description?: string): JsonSchema {
   return {
@@ -52,12 +46,19 @@ function object(properties: Record<string, JsonSchema>, description?: string): J
   };
 }
 
+/** { value, source_text, assumption, assumption_reason } */
+const sourced = (value: JsonSchema, description?: string) =>
+  object({ value, ...SOURCE_FIELDS }, description);
+
+/** A string from a fixed list, or "" for unknown. */
+const enumOrEmpty = (values: string[]) => ({ type: "string", enum: [...values, EMPTY] });
+
 export function buildToolInputSchema(c: Catalog): JsonSchema {
-  const str = { type: "string" };
+  const unknownHint = 'Use value "" if the notes don\'t say.';
   return object({
-    job: nullable(sourced({ type: "string", enum: c.mainJobCodes })),
-    size: nullable(sourced({ type: "string", enum: c.allSizes })),
-    city: nullable(sourced({ type: "string", enum: c.cities })),
+    job: sourced(enumOrEmpty(c.mainJobCodes), `Main job code. ${unknownHint}`),
+    size: sourced(enumOrEmpty(c.allSizes), `Installs only. ${unknownHint} Always "" for service.`),
+    city: sourced(enumOrEmpty(c.cities), unknownHint),
     timing: sourced({ type: "string", enum: [...TIMINGS] }),
     peak_club: sourced({ type: "boolean" }),
     extra_jobs: {
@@ -77,14 +78,17 @@ export function buildToolInputSchema(c: Catalog): JsonSchema {
         ...SOURCE_FIELDS,
       }),
     },
-    units_removed: nullable(sourced({ type: "integer" })),
-    customer_name: nullable(sourced(str)),
-    customer_address: nullable(sourced(str)),
-    customer_phone: nullable(sourced(str)),
-    customer_email: nullable(sourced(str)),
+    units_removed: sourced(
+      { type: "integer" },
+      "Installs only: old units removed, if the notes clearly differ from the package. Use 0 to keep the package default.",
+    ),
+    customer_name: sourced({ type: "string" }, unknownHint),
+    customer_address: sourced({ type: "string" }, unknownHint),
+    customer_phone: sourced({ type: "string" }, unknownHint),
+    customer_email: sourced({ type: "string" }, unknownHint),
     questions: {
       type: "array",
-      items: str,
+      items: { type: "string" },
       description: "Questions for the tech when something needed to price the job is missing. Empty if none.",
     },
   });
@@ -92,46 +96,66 @@ export function buildToolInputSchema(c: Catalog): JsonSchema {
 
 // ---------- zod (validates what comes back) ----------
 
+/** "" -> null, otherwise the trimmed text. */
+const textOrNull = z.string().transform((s) => s.trim() || null);
+
 const sourceFields = {
-  source_text: z.string().nullable(),
+  source_text: textOrNull,
   assumption: z.boolean(),
-  assumption_reason: z.string().nullable(),
+  assumption_reason: textOrNull,
 };
 
-/** Every filled field needs quoted notes text, or must be flagged as an assumption. */
-function hasSourceOrAssumption(f: { source_text: string | null; assumption: boolean }) {
-  return f.assumption || (f.source_text !== null && f.source_text.trim() !== "");
-}
-const SOURCE_MESSAGE = "needs source_text or assumption: true";
+type SourceFields = { source_text: string | null; assumption: boolean };
 
+/** Every filled field needs quoted notes text, or must be flagged as an assumption. */
+function checkSource(f: SourceFields, ctx: z.RefinementCtx) {
+  if (!f.assumption && !f.source_text) {
+    ctx.addIssue({ code: "custom", message: "needs source_text or assumption: true" });
+  }
+}
+
+/** A sourced field that is always filled (timing, peak club). */
 const sourcedZ = <T extends z.ZodType>(value: T) =>
-  z.object({ value, ...sourceFields }).refine(hasSourceOrAssumption, SOURCE_MESSAGE);
+  z.object({ value, ...sourceFields }).superRefine(checkSource);
+
+/**
+ * A sourced field that may be "not given" ("" or 0). Returns null when not given,
+ * so the rest of the code can treat it as missing.
+ */
+const sourcedOrNull = <T extends z.ZodType>(value: T, isEmpty: (v: unknown) => boolean) =>
+  z
+    .object({ value, ...sourceFields })
+    .superRefine((f, ctx) => {
+      if (!isEmpty((f as { value: unknown }).value)) checkSource(f, ctx);
+    })
+    .transform((f) => (isEmpty((f as { value: unknown }).value) ? null : f));
+
+const isEmptyText = (v: unknown) => typeof v === "string" && v.trim() === "";
 
 export function buildToolInputZod(c: Catalog) {
+  const oneOfOrEmpty = (values: string[]) => z.enum([EMPTY, ...values] as [string, ...string[]]);
   const oneOf = (values: string[]) => z.enum(values as [string, ...string[]]);
   return z.object({
-    job: sourcedZ(oneOf(c.mainJobCodes)).nullable(),
-    size: sourcedZ(oneOf(c.allSizes)).nullable(),
-    city: sourcedZ(oneOf(c.cities)).nullable(),
+    job: sourcedOrNull(oneOfOrEmpty(c.mainJobCodes), isEmptyText),
+    size: sourcedOrNull(oneOfOrEmpty(c.allSizes), isEmptyText),
+    city: sourcedOrNull(oneOfOrEmpty(c.cities), isEmptyText),
     timing: sourcedZ(z.enum(TIMINGS)),
     peak_club: sourcedZ(z.boolean()),
     extra_jobs: z.array(
       z
         .object({ job_code: oneOf([...c.addonJobCodes, ...c.serviceJobCodes]), ...sourceFields })
-        .refine(hasSourceOrAssumption, SOURCE_MESSAGE),
+        .superRefine(checkSource),
     ),
     parts: z.array(
-      z
-        .object({ sku: oneOf(c.skus), qty: z.number().positive(), ...sourceFields })
-        .refine(hasSourceOrAssumption, SOURCE_MESSAGE),
+      z.object({ sku: oneOf(c.skus), qty: z.number().positive(), ...sourceFields }).superRefine(checkSource),
     ),
-    units_removed: sourcedZ(z.number().int().nonnegative()).nullable(),
-    customer_name: sourcedZ(z.string()).nullable(),
-    customer_address: sourcedZ(z.string()).nullable(),
-    customer_phone: sourcedZ(z.string()).nullable(),
-    customer_email: sourcedZ(z.string()).nullable(),
-    questions: z.array(z.string()),
+    units_removed: sourcedOrNull(z.number().int().nonnegative(), (v) => v === 0),
+    customer_name: sourcedOrNull(z.string(), isEmptyText),
+    customer_address: sourcedOrNull(z.string(), isEmptyText),
+    customer_phone: sourcedOrNull(z.string(), isEmptyText),
+    customer_email: sourcedOrNull(z.string(), isEmptyText),
+    questions: z.array(z.string()).transform((qs) => qs.map((q) => q.trim()).filter(Boolean)),
   });
 }
 
-export type ToolInput = z.infer<ReturnType<typeof buildToolInputZod>>;
+export type ToolInput = z.output<ReturnType<typeof buildToolInputZod>>;

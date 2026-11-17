@@ -10,34 +10,36 @@ import { TOOL_NAME, buildToolInputSchema, type ToolInput } from "./schema";
 const data = loadDataset();
 const catalog = buildCatalog(data);
 
+// Fields as the model sends them: "" means "not given".
 const heard = (value: unknown, source_text: string) => ({
   value,
   source_text,
   assumption: false,
-  assumption_reason: null,
+  assumption_reason: "",
 });
 const assumed = (value: unknown, reason: string) => ({
   value,
-  source_text: null,
+  source_text: "",
   assumption: true,
   assumption_reason: reason,
 });
+const notGiven = (value: "" | 0 = "") => ({ value, source_text: "", assumption: false, assumption_reason: "" });
 
 /** A complete, valid tool input; override what each test needs. */
 function toolInput(overrides: Partial<Record<keyof ToolInput, unknown>> = {}) {
   return {
-    job: null,
-    size: null,
-    city: null,
+    job: notGiven(),
+    size: notGiven(),
+    city: notGiven(),
     timing: assumed("standard", "no time mentioned"),
     peak_club: assumed(false, "not mentioned"),
     extra_jobs: [],
     parts: [],
-    units_removed: null,
-    customer_name: null,
-    customer_address: null,
-    customer_phone: null,
-    customer_email: null,
+    units_removed: notGiven(0),
+    customer_name: notGiven(),
+    customer_address: notGiven(),
+    customer_phone: notGiven(),
+    customer_email: notGiven(),
     questions: [],
     ...overrides,
   };
@@ -129,10 +131,8 @@ describe("interpretNotes", () => {
     const notes = `${script1.notes} Also needs a condensate pump.`;
     const input = {
       ...script1Input,
-      extra_jobs: [{ job_code: "A-PUMP", ...heard(null, "needs a condensate pump") }].map(
-        ({ value: _v, ...rest }) => rest, // eslint-disable-line @typescript-eslint/no-unused-vars
-      ),
-      parts: [{ sku: "PUMP-CND", qty: 1, source_text: "condensate pump", assumption: false, assumption_reason: null }],
+      extra_jobs: [{ job_code: "A-PUMP", source_text: "needs a condensate pump", assumption: false, assumption_reason: "" }],
+      parts: [{ sku: "PUMP-CND", qty: 1, source_text: "condensate pump", assumption: false, assumption_reason: "" }],
     };
     const { client } = fakeClient(toolResponse(input));
     const result = await interpretNotes(notes, data, client);
@@ -141,7 +141,7 @@ describe("interpretNotes", () => {
   });
 
   it("retries once when a field has neither source_text nor assumption", async () => {
-    const bad = { ...script1Input, city: { value: "Logan", source_text: null, assumption: false, assumption_reason: null } };
+    const bad = { ...script1Input, city: { value: "Logan", source_text: "", assumption: false, assumption_reason: "" } };
     const { client, create } = fakeClient(toolResponse(bad), toolResponse(script1Input));
     const result = await interpretNotes(script1.notes, data, client);
     expect(create).toHaveBeenCalledTimes(2);
@@ -161,6 +161,14 @@ describe("interpretNotes", () => {
     expect(result.spec!.jobCode).toBe("I-AC");
   });
 
+  it('treats "" and 0 as not given, and needs no source for them', async () => {
+    const { client } = fakeClient(toolResponse(script1Input));
+    const result = await interpretNotes(script1.notes, data, client);
+    expect(result.heard.map((h) => h.field)).not.toContain("Units removed");
+    expect(result.heard.map((h) => h.field)).not.toContain("Customer phone");
+    expect(result.spec!.unitsRemoved).toBeUndefined();
+  });
+
   it("reports a refusal in plain words", async () => {
     const { client } = fakeClient({ stop_reason: "refusal", content: [] });
     await expect(interpretNotes("x", data, client)).rejects.toThrow(/declined/);
@@ -174,9 +182,9 @@ describe("interpretNotes", () => {
     expect(req.tool_choice).toBeUndefined(); // forced tool choice isn't allowed on this model
     expect(req.tools[0]).toMatchObject({ name: TOOL_NAME, strict: true });
     const props = req.tools[0].input_schema.properties;
-    expect(props.city.anyOf[0].properties.value.enum).toEqual(data.rules.service_area);
+    expect(props.city.properties.value.enum).toEqual([...data.rules.service_area, ""]);
     expect(props.parts.items.properties.sku.enum).toHaveLength(40);
-    expect(props.job.anyOf[0].properties.value.enum).not.toContain("I-HP"); // no packages to price it
+    expect(props.job.properties.value.enum).not.toContain("I-HP"); // no packages to price it
     const system = req.system[0].text as string;
     expect(system).toContain("CAP-45-5: Dual run capacitor, 45/5 uF, 440V");
     expect(system).toContain("- North Logan");
@@ -193,6 +201,10 @@ describe("tool schema", () => {
         expect(n.additionalProperties).toBe(false);
         expect([...(n.required as string[])].sort()).toEqual(Object.keys(n.properties as object).sort());
       }
+      // The API allows at most 16 union-typed fields in strict mode; we use none.
+      expect(n, "no anyOf/oneOf unions").not.toHaveProperty("anyOf");
+      expect(n, "no oneOf unions").not.toHaveProperty("oneOf");
+      expect(Array.isArray(n.type), "no type arrays").toBe(false);
       for (const bad of ["minimum", "maximum", "minLength", "maxLength", "multipleOf"]) {
         expect(n).not.toHaveProperty(bad);
       }
