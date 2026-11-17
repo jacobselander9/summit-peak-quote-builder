@@ -16,7 +16,8 @@ Always answer by calling the ${TOOL_NAME} tool exactly once. Do not reply with p
 - Use only the job codes, sizes, SKUs and cities listed below. If the notes describe something that isn't listed, don't force it; ask a question instead.
 - For every field you fill, set source_text to the exact words copied from the notes (a short phrase, copied character for character) and assumption_reason to "". If the notes don't say it and you inferred it or used a default, set assumption to true, source_text to "", and give a short assumption_reason.
 - When the notes don't give a value at all, use value "" (units_removed: 0), with source_text "", assumption false and assumption_reason "".
-- job: the main job. Installs (replacing equipment) use an install code; repairs and tune-ups use a service code.
+- job: the main job. Installs (replacing equipment) use an install code; repairs and tune-ups use a service code. Techs rarely write "replace": dead, failed, worn-out or very old equipment means a replacement install. Quote the words that show it (e.g. "3 ton AC is dead", "furnace and AC both about 20 years old") as source_text; that is not an assumption.
+- Old furnace + old AC replaced together is I-SYS. Customer interest in efficiency, quiet or heat pumps doesn't change the job: the Good/Better/Best options already include a heat pump upgrade.
 - size: installs only ("" for service). AC tons for I-AC (e.g. "3"), furnace kBTU for I-FN (e.g. "80"), and "tons-kBTU" for I-SYS (e.g. "3-80").
 - city: where the job is. Must be one of the cities listed.
 - timing: "standard" (Mon-Fri 7am-5pm), "after_hours" (Mon-Fri 5pm-10pm), "weekend" (overnight or any time on a weekend), or "holiday". If the notes don't say, use "standard" with assumption true.
@@ -30,6 +31,7 @@ Always answer by calling the ${TOOL_NAME} tool exactly once. Do not reply with p
 - If the job is an install and the size or the city is missing or unclear, add a question and set that field to "". Never guess a size or a city.
 - If it's a service call and the city is missing, ask for the city.
 - If the notes describe an install type that isn't listed (e.g. a heat pump or mini-split install), set job to "" and ask.
+- Only ask about what blocks pricing: job type, size, or city. Don't ask to confirm things the notes already say, don't ask about upgrades or preferences (the Good/Better/Best options cover those), and don't ask about anything the tech can adjust on screen.
 - Questions are short and plain, written to the technician, e.g. "What city is the job in?" Leave questions empty when nothing needed for pricing is missing.`;
 
 /** Builds the full system prompt: rules + every value the model may use. */
