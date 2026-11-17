@@ -1,26 +1,40 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Summit Peak brand colors. Use as bg-navy, text-orange, border-navy-100, etc. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-navy: #1f3a5f;
+  --color-navy-700: #2b4c78;
+  --color-navy-100: #e6ecf4;
+  --color-navy-50: #f3f6fa;
+  --color-orange: #e07a2e;
+  --color-orange-700: #b85f1c;
+  --color-orange-100: #fbeadc;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Light only: the app is built to be readable on a projector. */
+html {
+  font-size: 18px;
+}
+body {
+  background: #f3f6fa;
+  color: #14233a;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Clear keyboard focus everywhere. */
+:focus-visible {
+  outline: 3px solid #e07a2e;
+  outline-offset: 2px;
+}
+
+/* Hide number-input spinners; we use our own large inputs. */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }
