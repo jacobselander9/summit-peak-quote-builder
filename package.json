@@ -10,9 +10,11 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "quote": "tsx scripts/print-quote.ts"
+    "quote": "tsx scripts/print-quote.ts",
+    "try-notes": "tsx scripts/try-notes.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0",
     "next": "15.5.29",
     "papaparse": "^5.7.1",
     "react": "19.1.0",
