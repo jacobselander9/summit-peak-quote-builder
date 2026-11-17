@@ -1,6 +1,6 @@
 "use client";
 // Good / Better / Best cards (or one card for a repair). Click a card to edit it.
-import { formatCents } from "@/lib/pricing";
+import { formatCents, formatPct } from "@/lib/pricing";
 import type { OptionKey, QuoteOption } from "@/lib/pricing/types";
 
 const TIER_LABEL: Record<OptionKey, string> = { good: "Good", better: "Better", best: "Best", repair: "Repair" };
@@ -9,10 +9,13 @@ export function OptionCards({
   options,
   selected,
   onSelect,
+  showMargin = false,
 }: {
   options: QuoteOption[];
   selected: OptionKey;
   onSelect: (key: OptionKey) => void;
+  /** Owner view: show each option's margin. */
+  showMargin?: boolean;
 }) {
   return (
     <div className={`grid gap-4 ${options.length > 1 ? "md:grid-cols-3" : ""}`} role="tablist" aria-label="Options">
@@ -44,6 +47,15 @@ export function OptionCards({
             {o.totals.depositCents !== null && (
               <span className="mt-2 text-slate-700">
                 Deposit <strong className="tabular-nums">{formatCents(o.totals.depositCents)}</strong>
+              </span>
+            )}
+            {showMargin && (
+              <span
+                className={`mt-2 self-start rounded-md px-2 py-0.5 text-sm font-bold ${
+                  o.margin.passes ? "bg-emerald-100 text-emerald-800" : "bg-red-100 text-red-800"
+                }`}
+              >
+                Margin {formatPct(o.margin.margin)} {o.margin.passes ? "✓" : "✗"}
               </span>
             )}
             {o.edits.length > 0 && (

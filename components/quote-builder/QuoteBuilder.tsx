@@ -20,6 +20,7 @@ import { JobControls } from "./JobControls";
 import { LineItems, Totals } from "./LineItems";
 import { NotesPanel, Spinner } from "./NotesPanel";
 import { OptionCards } from "./OptionCards";
+import { HowWeGotThis, MarginCheck } from "./OwnerView";
 
 type Status = { kind: "idle" } | { kind: "loading" } | { kind: "error"; message: string };
 
@@ -27,8 +28,10 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
   const [notes, setNotes] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [questions, setQuestions] = useState<string[]>([]);
-  // What the agent heard; shown in the owner view (Phase 5).
-  const [, setHeard] = useState<HeardItem[]>([]);
+  /** What the agent pulled from the notes; shown in the owner view. */
+  const [heard, setHeard] = useState<HeardItem[]>([]);
+  /** Owner view shows margin and the calculation trace. Off by default. */
+  const [ownerView, setOwnerView] = useState(false);
   /** The agent's draft, kept to show what changed by hand. */
   const [draftSpec, setDraftSpec] = useState<JobSpecInput | null>(null);
   /** The live spec: the draft plus timing / Peak Club / customer changes. */
@@ -118,7 +121,25 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
             <p className="text-navy-100">Quote Builder</p>
           </div>
         </div>
-        <span className="rounded-full bg-orange px-3 py-1 text-sm font-bold">DEMO</span>
+        <div className="flex items-center gap-4">
+          <label className="flex cursor-pointer items-center gap-2 font-semibold">
+            <span>Owner view</span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={ownerView}
+              onClick={() => setOwnerView((v) => !v)}
+              className={`relative h-8 w-14 rounded-full transition ${ownerView ? "bg-orange" : "bg-navy-700"}`}
+            >
+              <span
+                className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-all ${
+                  ownerView ? "left-7" : "left-1"
+                }`}
+              />
+            </button>
+          </label>
+          <span className="rounded-full bg-orange px-3 py-1 text-sm font-bold">DEMO</span>
+        </div>
       </header>
 
       <NotesPanel
@@ -198,7 +219,7 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
             jobLabel={`${job.jobCode} · ${job.description}`}
             isInstall={quote.jobKind === "install"}
           />
-          <OptionCards options={quote.options} selected={option.key} onSelect={setSelected} />
+          <OptionCards options={quote.options} selected={option.key} onSelect={setSelected} showMargin={ownerView} />
           <section className="grid gap-5 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-navy-100 sm:p-5 lg:grid-cols-[1fr_20rem]">
             <div className="min-w-0">
               <h2 className="mb-1 text-xl font-bold text-navy">
@@ -220,6 +241,12 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
               <Totals option={option} validDays={quote.validDays} />
             </aside>
           </section>
+          {ownerView && (
+            <>
+              <MarginCheck option={option} />
+              <HowWeGotThis option={option} heard={heard} jobEdits={describeSpecChanges(draftSpec, spec)} />
+            </>
+          )}
         </>
       )}
 
