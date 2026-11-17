@@ -1,0 +1,46 @@
+{
+  "name": "summit-peak-quote-builder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "quote": "tsx --tsconfig tsconfig.scripts.json scripts/print-quote.ts",
+    "try-notes": "tsx --tsconfig tsconfig.scripts.json scripts/try-notes.ts",
+    "pdfs": "tsx --tsconfig tsconfig.scripts.json scripts/make-pdfs.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0",
+    "@react-pdf/renderer": "^4.9.0",
+    "next": "15.5.29",
+    "papaparse": "^5.7.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^22.20.5",
+    "@types/papaparse": "^5.5.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.29",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "vitest": "^5.1.0"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "^8.5.33"
+    }
+  }
+}
