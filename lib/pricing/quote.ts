@@ -11,7 +11,7 @@ import type { Dataset, TierName } from "@/lib/data";
 import { applyEdits, baseDrafts } from "./drafts";
 import { priceDrafts, type AppliedMultiplier } from "./lines";
 import { formatCents } from "./money";
-import { computeMargin, computeTotals, minimumLine } from "./totals";
+import { computeMargin, computeTotals, discountLine, minimumLine } from "./totals";
 import {
   JobSpecSchema,
   PricingError,
@@ -50,6 +50,7 @@ export function buildQuote(data: Dataset, specInput: JobSpecInput, edits: EditsB
     peakClub: spec.peakClub,
     customer: spec.customer,
     validDays: data.rules.quote_valid_days,
+    financing: { termMonths: data.rules.financing.term_months, apr: data.rules.financing.apr },
     options,
   };
 }
@@ -75,10 +76,12 @@ function priceOption(
   addFeeRules(data, spec, jobKind, rules);
 
   const lines = priceDrafts(data, drafts, multipliers);
+  const discLine = discountLine(spec.discount, lines, rules);
+  if (discLine) lines.push(discLine);
   const minLine = minimumLine(data, jobKind, lines, rules);
   if (minLine) lines.push(minLine);
 
-  const totals = computeTotals(data, jobKind, lines, rules);
+  const totals = computeTotals(data, jobKind, lines, rules, discLine ? spec.discount!.pct : 0);
   const margin = computeMargin(data, jobKind, lines, totals);
 
   const name =

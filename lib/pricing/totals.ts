@@ -1,10 +1,49 @@
 // Step 3 of pricing: minimum ticket, tax, total, deposit, and the margin check.
 import type { Dataset } from "@/lib/data";
-import { formatCents, multiplyRound } from "./money";
+import { formatCents, formatNumber, multiplyRound } from "./money";
 import type { JobKind, MarginCheck, QuoteLine, QuoteTotals, RuleTrace } from "./types";
 
 const sum = (lines: QuoteLine[], pick: (l: QuoteLine) => number) =>
   lines.reduce((acc, l) => acc + pick(l), 0);
+
+/**
+ * Job-wide discount: pct × (parts + labor + fees), shown as one negative line.
+ * Applied before the minimum ticket, so a repair never drops below the minimum.
+ */
+export function discountLine(
+  discount: { pct: number; reason: string } | undefined,
+  lines: QuoteLine[],
+  rules: RuleTrace[],
+): QuoteLine | null {
+  if (!discount || discount.pct <= 0) return null;
+  const baseCents = sum(lines, (l) => l.amountCents);
+  const offCents = multiplyRound(baseCents, [discount.pct / 100]);
+  if (offCents === 0) return null;
+  const label = `${discount.reason} discount (${formatNumber(discount.pct)}%)`;
+  rules.push({
+    rule: "Discount",
+    effect: `${label}: ${formatNumber(discount.pct)}% off parts, labor and fees (${formatCents(baseCents)}) = −${formatCents(offCents)}. Tax is charged on parts after the discount.`,
+    source: "entered for this quote",
+  });
+  return {
+    id: "discount",
+    kind: "discount",
+    code: "DISC",
+    description: label,
+    qty: 1,
+    unit: "ea",
+    unitPriceCents: -offCents,
+    amountCents: -offCents,
+    taxable: false,
+    costCents: 0,
+    edited: false,
+    trace: {
+      source: "entered for this quote",
+      formula: `${formatNumber(discount.pct)}% × ${formatCents(baseCents)} = −${formatCents(offCents)}`,
+      details: ["Lowers the price, not our cost, so it comes straight out of margin"],
+    },
+  };
+}
 
 /**
  * Service only: if parts + labor + fees is under the minimum ticket ($189),
@@ -52,20 +91,24 @@ export function computeTotals(
   jobKind: JobKind,
   lines: QuoteLine[],
   rules: RuleTrace[],
+  discountPct = 0,
 ): QuoteTotals {
   const byKind = (k: QuoteLine["kind"]) => sum(lines.filter((l) => l.kind === k), (l) => l.amountCents);
   const partsCents = byKind("part");
   const laborCents = byKind("labor");
   const feesCents = byKind("fee");
   const minAdjCents = byKind("minimum");
-  const subtotalCents = partsCents + laborCents + feesCents + minAdjCents;
+  const discountCents = -byKind("discount");
+  const subtotalCents = partsCents + laborCents + feesCents + minAdjCents - discountCents;
 
   // Tax: 7.25% on parts and equipment only, rounded to the cent.
-  const taxableCents = sum(lines.filter((l) => l.taxable), (l) => l.amountCents);
+  // A discount lowers the taxable parts by the same percentage.
+  const partsBeforeDiscount = sum(lines.filter((l) => l.taxable), (l) => l.amountCents);
+  const taxableCents = partsBeforeDiscount - multiplyRound(partsBeforeDiscount, [discountPct / 100]);
   const taxCents = multiplyRound(taxableCents, [data.rules.tax_rate]);
   rules.push({
     rule: "Tax",
-    effect: `${Number((data.rules.tax_rate * 100).toFixed(4))}% on parts & equipment only (${formatCents(taxableCents)}) = ${formatCents(taxCents)}. Labor and fees are not taxed.`,
+    effect: `${Number((data.rules.tax_rate * 100).toFixed(4))}% on parts & equipment only (${formatCents(taxableCents)}${discountPct > 0 ? " after discount" : ""}) = ${formatCents(taxCents)}. Labor and fees are not taxed.`,
     source: "pricing_rules.json",
   });
   const totalCents = subtotalCents + taxCents;
@@ -82,7 +125,17 @@ export function computeTotals(
     });
   }
 
-  return { partsCents, laborCents, feesCents, minAdjCents, subtotalCents, taxCents, totalCents, depositCents };
+  return {
+    partsCents,
+    laborCents,
+    feesCents,
+    minAdjCents,
+    discountCents,
+    subtotalCents,
+    taxCents,
+    totalCents,
+    depositCents,
+  };
 }
 
 /**

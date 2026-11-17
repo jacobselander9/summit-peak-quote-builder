@@ -8,6 +8,7 @@ const KIND_LABEL: Record<QuoteLine["kind"], string> = {
   part: "Parts & equipment",
   labor: "Labor",
   fee: "Fees",
+  discount: "Discount",
   minimum: "Minimum charge",
 };
 
@@ -27,7 +28,7 @@ export function LineItems({
   onRemove: (lineId: string) => void;
   onRestore: (lineId: string) => void;
 }) {
-  const groups = (["part", "labor", "fee", "minimum"] as const)
+  const groups = (["part", "labor", "fee", "discount", "minimum"] as const)
     .map((kind) => ({ kind, lines: option.lines.filter((l) => l.kind === kind) }))
     .filter((g) => g.lines.length > 0);
 
@@ -68,18 +69,22 @@ export function LineItems({
                 <td className="py-2 pl-2 text-right">
                   {l.kind === "labor" ? (
                     <NumberField label={`Hours for ${l.description}`} value={l.qty} step={0.25} onChange={(n) => onHours(l.id, n)} />
-                  ) : l.kind === "minimum" ? (
+                  ) : l.kind === "minimum" || l.kind === "discount" ? (
                     <span className="text-slate-400">—</span>
                   ) : (
                     <NumberField label={`Quantity of ${l.description}`} value={l.qty} onChange={(n) => onQty(l.id, n)} />
                   )}
                 </td>
                 <td className="hidden py-2 pl-3 text-right tabular-nums text-slate-600 sm:table-cell">
-                  {l.kind === "minimum" ? "" : `${formatCents(l.unitPriceCents)}${l.kind === "labor" ? "/hr" : ""}`}
+                  {l.kind === "minimum" || l.kind === "discount" ? "" : `${formatCents(l.unitPriceCents)}${l.kind === "labor" ? "/hr" : ""}`}
                 </td>
-                <td className="py-2 pl-3 text-right font-semibold tabular-nums">{formatCents(l.amountCents)}</td>
+                <td
+                  className={`py-2 pl-3 text-right font-semibold tabular-nums ${l.kind === "discount" ? "text-emerald-700" : ""}`}
+                >
+                  {l.amountCents < 0 ? `−${formatCents(-l.amountCents)}` : formatCents(l.amountCents)}
+                </td>
                 <td className="py-2 text-right">
-                  {l.kind !== "minimum" && (
+                  {l.kind !== "minimum" && l.kind !== "discount" && (
                     <button
                       type="button"
                       onClick={() => onRemove(l.id)}
@@ -130,6 +135,12 @@ export function Totals({ option, validDays }: { option: QuoteOption; validDays: 
       {row("Parts & equipment", t.partsCents)}
       {row("Labor", t.laborCents)}
       {t.feesCents > 0 && row("Fees", t.feesCents)}
+      {t.discountCents > 0 && (
+        <div className="flex justify-between gap-4 py-1 font-semibold text-emerald-700">
+          <span>Discount</span>
+          <span className="tabular-nums">−{formatCents(t.discountCents)}</span>
+        </div>
+      )}
       {t.minAdjCents > 0 && row("Minimum service charge", t.minAdjCents)}
       <div className="my-1 border-t border-navy-100" />
       {row("Subtotal", t.subtotalCents)}

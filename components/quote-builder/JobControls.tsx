@@ -1,6 +1,7 @@
 "use client";
 // Job-level settings the tech can change live: timing, Peak Club, customer info.
 import type { Customer, JobSpecInput, Timing } from "@/lib/pricing/types";
+import { NumberField } from "./NumberField";
 
 const TIMING_LABELS: Record<Timing, string> = {
   standard: "Standard",
@@ -22,6 +23,7 @@ export function JobControls({
 }) {
   const timing = spec.timing ?? "standard";
   const customer = spec.customer ?? {};
+  const discount = spec.discount;
   const setCustomer = (field: keyof Customer, value: string) =>
     onChange({ ...spec, customer: { ...customer, [field]: value } });
 
@@ -68,6 +70,33 @@ export function JobControls({
             <span className="text-sm text-slate-500">(discount applies to repairs, not installs)</span>
           )}
         </label>
+
+        <div className="flex flex-wrap items-end gap-3">
+          <label className="flex flex-col gap-1">
+            <span className="text-sm font-semibold uppercase tracking-wide text-slate-500">Discount %</span>
+            <NumberField
+              label="Discount percent"
+              value={discount?.pct ?? 0}
+              onChange={(pct) =>
+                onChange({
+                  ...spec,
+                  discount: pct > 0 ? { pct: Math.min(pct, 100), reason: discount?.reason ?? "Friends & family" } : undefined,
+                })
+              }
+              className="text-lg"
+            />
+          </label>
+          {discount && discount.pct > 0 && (
+            <label className="flex flex-col gap-1">
+              <span className="text-sm font-semibold uppercase tracking-wide text-slate-500">Reason</span>
+              <input
+                value={discount.reason ?? ""}
+                onChange={(e) => onChange({ ...spec, discount: { ...discount, reason: e.target.value } })}
+                className="w-48 rounded-md border-2 border-navy-100 px-2 py-1 focus:border-navy"
+              />
+            </label>
+          )}
+        </div>
       </div>
 
       <details className="group mt-5" open={Boolean(customer.name)}>

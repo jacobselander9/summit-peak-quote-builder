@@ -134,6 +134,58 @@ describe("pricing rules", () => {
   });
 });
 
+describe("discount", () => {
+  const friend = { pct: 10, reason: "Friends & family" };
+
+  it("takes 10% off parts, labor and fees; tax on discounted parts; deposit on the new total", () => {
+    const o = good({ ...logan, discount: friend });
+    // base 6,525 + 1,150 + 465 = 8,140 → 10% = 814.00
+    const line = o.lines.find((l) => l.kind === "discount")!;
+    expect(line.description).toBe("Friends & family discount (10%)");
+    expect(line.amountCents).toBe(-81400);
+    expect(o.totals.discountCents).toBe(81400);
+    expect(o.totals.subtotalCents).toBe(732600);
+    expect(o.totals.taxCents).toBe(42576); // 7.25% × (6,525 − 652.50) = 425.76
+    expect(o.totals.totalCents).toBe(775176);
+    expect(o.totals.depositCents).toBe(232553);
+  });
+
+  it("comes out of margin and can fail the target", () => {
+    const o = good({ ...logan, discount: friend });
+    // cost 3,961 + warranty 3% × 7,326 = 219.78 → 4,180.78
+    expect(o.margin.jobCostCents).toBe(418078);
+    expect(Number(o.margin.margin.toFixed(4))).toBe(0.4293);
+    expect(o.margin.passes).toBe(false);
+    expect(o.rules.find((r) => r.rule === "Discount")!.effect).toMatch(/10% off parts, labor and fees \(\$8,140\.00\) = −\$814\.00/);
+  });
+
+  it("applies to every option", () => {
+    const q = buildQuote(data, { ...logan, discount: friend });
+    expect(q.options.every((o) => o.totals.discountCents > 0)).toBe(true);
+  });
+
+  it("can't take a repair below the $189 minimum", () => {
+    const o = repair({ ...capacitor, discount: friend });
+    // 56 + 61.63 = 117.63 → −11.76 → 105.87, minimum tops up to 189
+    expect(o.totals.discountCents).toBe(1176);
+    expect(o.totals.minAdjCents).toBe(8313);
+    expect(o.totals.subtotalCents).toBe(18900);
+    expect(o.totals.taxCents).toBe(365); // 7.25% × 50.40
+  });
+
+  it("discounts an after-hours repair", () => {
+    const o = buildQuote(data, { ...DEMO_SCRIPTS[3].spec!, discount: friend }).options[0];
+    expect(o.totals.discountCents).toBe(5663);
+    expect(o.totals.totalCents).toBe(50968 + 731);
+  });
+
+  it("0% means no discount line", () => {
+    const o = good({ ...logan, discount: { pct: 0, reason: "x" } });
+    expect(o.lines.some((l) => l.kind === "discount")).toBe(false);
+    expect(o.totals.totalCents).toBe(861306);
+  });
+});
+
 describe("trace", () => {
   it("explains every line with its source", () => {
     const o = good(logan);

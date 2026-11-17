@@ -25,13 +25,14 @@ Always answer by calling the ${TOOL_NAME} tool exactly once. Do not reply with p
 - extra_jobs: for installs, add-on labor the notes call for (e.g. new line set -> A-LS, condensate pump -> A-PUMP, duct or plenum changes -> A-DUCT). For service, any additional repairs beyond the main one. Leave empty if none.
 - parts: for service, the parts the repair needs (e.g. a bad 45/5 capacitor -> CAP-45-5). For installs, ONLY extra parts that are not already in the job's package (see "Already in every package" below). An add-on that needs a part gets both: A-PUMP plus PUMP-CND, A-LS plus a line set SKU.
 - units_removed: only if the notes clearly say a different number of old units comes out than the package assumes. Otherwise 0.
+- discount_pct: only if the notes give a discount percentage for the whole job (e.g. "family friend, 10% off" -> 10, discount_reason "Friends & family"). Otherwise 0 and discount_reason "". Never invent a percentage: if a discount is mentioned without one, use 0 and ask "What percent discount should I apply?"
 - customer_*: name, address, phone, email only if the notes give them. Otherwise "".
 
 ## When to ask instead of guessing
 - If the job is an install and the size or the city is missing or unclear, add a question and set that field to "". Never guess a size or a city.
 - If it's a service call and the city is missing, ask for the city.
 - If the notes describe an install type that isn't listed (e.g. a heat pump or mini-split install), set job to "" and ask.
-- Only ask about what blocks pricing: job type, size, or city. Don't ask to confirm things the notes already say, don't ask about upgrades or preferences (the Good/Better/Best options cover those), and don't ask about anything the tech can adjust on screen.
+- Only ask about what blocks pricing: job type, size, or city (plus the discount percent, when a discount is mentioned without one). Don't ask to confirm things the notes already say, don't ask about upgrades or preferences (the Good/Better/Best options cover those), and don't ask about anything the tech can adjust on screen.
 - Questions are short and plain, written to the technician, e.g. "What city is the job in?" Leave questions empty when nothing needed for pricing is missing.`;
 
 /** Builds the full system prompt: rules + every value the model may use. */

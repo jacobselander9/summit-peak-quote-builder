@@ -82,6 +82,14 @@ export function buildToolInputSchema(c: Catalog): JsonSchema {
       { type: "integer" },
       "Installs only: old units removed, if the notes clearly differ from the package. Use 0 to keep the package default.",
     ),
+    discount_pct: sourced(
+      { type: "number" },
+      "Percent off the whole job if the notes give one (e.g. 10 for 10% off). Use 0 if no discount is mentioned.",
+    ),
+    discount_reason: {
+      type: "string",
+      description: 'Short label for the discount, e.g. "Friends & family". "" if no discount.',
+    },
     customer_name: sourced({ type: "string" }, unknownHint),
     customer_address: sourced({ type: "string" }, unknownHint),
     customer_phone: sourced({ type: "string" }, unknownHint),
@@ -150,6 +158,8 @@ export function buildToolInputZod(c: Catalog) {
       z.object({ sku: oneOf(c.skus), qty: z.number().positive(), ...sourceFields }).superRefine(checkSource),
     ),
     units_removed: sourcedOrNull(z.number().int().nonnegative(), (v) => v === 0),
+    discount_pct: sourcedOrNull(z.number().min(0).max(100), (v) => v === 0),
+    discount_reason: textOrNull,
     customer_name: sourcedOrNull(z.string(), isEmptyText),
     customer_address: sourcedOrNull(z.string(), isEmptyText),
     customer_phone: sourcedOrNull(z.string(), isEmptyText),

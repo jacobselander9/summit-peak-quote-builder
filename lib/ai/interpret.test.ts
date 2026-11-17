@@ -36,6 +36,8 @@ function toolInput(overrides: Partial<Record<keyof ToolInput, unknown>> = {}) {
     extra_jobs: [],
     parts: [],
     units_removed: notGiven(0),
+    discount_pct: notGiven(0),
+    discount_reason: "",
     customer_name: notGiven(),
     customer_address: notGiven(),
     customer_phone: notGiven(),
@@ -167,6 +169,15 @@ describe("interpretNotes", () => {
     expect(result.heard.map((h) => h.field)).not.toContain("Units removed");
     expect(result.heard.map((h) => h.field)).not.toContain("Customer phone");
     expect(result.spec!.unitsRemoved).toBeUndefined();
+  });
+
+  it("reads a family-friend discount from the notes", async () => {
+    const notes = `${script1.notes} Family friend, give them 10% off.`;
+    const input = { ...script1Input, discount_pct: heard(10, "10% off"), discount_reason: "Friends & family" };
+    const { client } = fakeClient(toolResponse(input));
+    const result = await interpretNotes(notes, data, client);
+    expect(result.spec!.discount).toEqual({ pct: 10, reason: "Friends & family" });
+    expect(result.heard.find((h) => h.field === "Discount")).toMatchObject({ value: "10% Friends & family", sourceText: "10% off" });
   });
 
   it("reports a refusal in plain words", async () => {

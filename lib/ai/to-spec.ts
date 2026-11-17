@@ -63,6 +63,9 @@ export function toInterpretation(
     hear("Part", `${p.sku} × ${p.qty}: ${data.priceBook[p.sku].description}`, p);
   }
   if (input.units_removed) hear("Units removed", String(input.units_removed.value), input.units_removed);
+  if (input.discount_pct) {
+    hear("Discount", `${input.discount_pct.value}% ${input.discount_reason ?? ""}`.trim(), input.discount_pct);
+  }
   const customer = {
     name: input.customer_name?.value,
     address: input.customer_address?.value,
@@ -112,6 +115,9 @@ export function toInterpretation(
         parts: input.parts.map((p) => ({ sku: p.sku, qty: p.qty })),
         ...(isInstall && input.units_removed ? { unitsRemoved: input.units_removed.value } : {}),
         ...(Object.values(customer).some(Boolean) ? { customer: stripEmpty(customer) } : {}),
+        ...(input.discount_pct
+          ? { discount: { pct: input.discount_pct.value, reason: input.discount_reason ?? "Discount" } }
+          : {}),
       }
     : null;
 

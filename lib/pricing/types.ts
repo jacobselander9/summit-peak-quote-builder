@@ -50,6 +50,13 @@ export const JobSpecSchema = z.object({
   unitsRemoved: z.number().int().nonnegative().optional(),
   sealedSystemsOpened: z.number().int().nonnegative().optional(),
   customer: CustomerSchema.optional(),
+  /** Job-wide discount, e.g. { pct: 10, reason: "Friends & family" }. */
+  discount: z
+    .object({
+      pct: z.number().min(0).max(100),
+      reason: z.string().trim().default("Discount"),
+    })
+    .optional(),
 });
 export type JobSpecInput = z.input<typeof JobSpecSchema>;
 export type JobSpec = z.output<typeof JobSpecSchema>;
@@ -77,7 +84,7 @@ export type EditsByOption = Partial<Record<OptionKey, QuoteEditsInput>>;
 // ---------- Outputs ----------
 
 export type JobKind = "install" | "service";
-export type LineKind = "part" | "labor" | "fee" | "minimum";
+export type LineKind = "part" | "labor" | "fee" | "discount" | "minimum";
 
 /** Why a line has the number it has. Owner view only. */
 export type LineTrace = {
@@ -90,7 +97,7 @@ export type LineTrace = {
 };
 
 export type QuoteLine = {
-  /** Stable id used by edits: "part:SKU", "labor:JOB:ROLE", "fee:CODE", "minimum". */
+  /** Stable id used by edits: "part:SKU", "labor:JOB:ROLE", "fee:CODE", "discount", "minimum". */
   id: string;
   kind: LineKind;
   /** SKU, fee code, or job code. */
@@ -125,6 +132,8 @@ export type QuoteTotals = {
   feesCents: number;
   /** "Minimum service charge" top-up, 0 if not needed. */
   minAdjCents: number;
+  /** Amount taken off by the discount, as a positive number (0 if none). */
+  discountCents: number;
   /** Before tax. */
   subtotalCents: number;
   taxCents: number;
@@ -170,6 +179,8 @@ export type Quote = {
   peakClub: boolean;
   customer?: Customer;
   validDays: number;
+  /** Customer financing offer from pricing_rules.json. */
+  financing: { termMonths: number; apr: number };
   options: QuoteOption[];
 };
 

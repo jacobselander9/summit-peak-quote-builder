@@ -31,6 +31,12 @@ export function MarginCheck({ option }: { option: QuoteOption }) {
       <div className="mt-4 grid gap-6 md:grid-cols-2">
         <div>
           {row("Subtotal (before tax)", option.totals.subtotalCents)}
+          {option.totals.discountCents > 0 && (
+            <div className="flex justify-between gap-4 py-0.5 text-sm text-slate-600">
+              <span>includes discount given</span>
+              <span className="tabular-nums">−{formatCents(option.totals.discountCents)}</span>
+            </div>
+          )}
           <div className="my-1 border-t border-navy-100" />
           {row("Parts at our cost", m.partsCostCents)}
           {row("Labor at burdened cost", m.laborCostCents)}

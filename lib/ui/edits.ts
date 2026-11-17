@@ -74,6 +74,13 @@ export function describeSpecChanges(draft: JobSpecInput | null, now: JobSpecInpu
   if (Boolean(draft.peakClub) !== Boolean(now.peakClub)) {
     out.push(now.peakClub ? "Turned Peak Club on" : "Turned Peak Club off");
   }
+  const pctBefore = draft.discount?.pct ?? 0;
+  const pctNow = now.discount?.pct ?? 0;
+  if (pctBefore !== pctNow) {
+    out.push(pctNow > 0 ? `Set discount to ${pctNow}% (${now.discount?.reason || "Discount"})` : "Removed the discount");
+  } else if (pctNow > 0 && (draft.discount?.reason ?? "") !== (now.discount?.reason ?? "")) {
+    out.push(`Changed discount reason to "${now.discount?.reason}"`);
+  }
   for (const field of ["name", "address", "phone", "email"] as const) {
     const before = draft.customer?.[field] ?? "";
     const after = now.customer?.[field] ?? "";
