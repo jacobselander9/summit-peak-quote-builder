@@ -1,0 +1,8 @@
+{
+  // Used by `tsx` for scripts in /scripts: same as tsconfig.json, but compiles
+  // JSX (Next.js leaves JSX for its own compiler, which scripts don't have).
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  }
+}

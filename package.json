@@ -2,6 +2,7 @@
   "name": "summit-peak-quote-builder",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,11 +11,13 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "quote": "tsx scripts/print-quote.ts",
-    "try-notes": "tsx scripts/try-notes.ts"
+    "quote": "tsx --tsconfig tsconfig.scripts.json scripts/print-quote.ts",
+    "try-notes": "tsx --tsconfig tsconfig.scripts.json scripts/try-notes.ts",
+    "pdfs": "tsx --tsconfig tsconfig.scripts.json scripts/make-pdfs.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",
+    "@react-pdf/renderer": "^4.9.0",
     "next": "15.5.29",
     "papaparse": "^5.7.1",
     "react": "19.1.0",

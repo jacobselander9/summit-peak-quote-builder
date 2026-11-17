@@ -16,6 +16,7 @@ import {
   setQty,
 } from "@/lib/ui/edits";
 import { AddPart } from "./AddPart";
+import { CreatePdf } from "./CreatePdf";
 import { JobControls } from "./JobControls";
 import { LineItems, Totals } from "./LineItems";
 import { NotesPanel, Spinner } from "./NotesPanel";
@@ -237,8 +238,9 @@ export function QuoteBuilder({ data }: { data: Dataset }) {
                 <AddPart priceBook={data.priceBook} onAdd={(sku) => setEdits((e) => addPart(e, option.key, sku))} />
               </div>
             </div>
-            <aside className="lg:sticky lg:top-4 lg:self-start">
+            <aside className="flex flex-col gap-4 lg:sticky lg:top-4 lg:self-start">
               <Totals option={option} validDays={quote.validDays} />
+              <CreatePdf quote={quote} selected={option.key} />
             </aside>
           </section>
           {ownerView && (

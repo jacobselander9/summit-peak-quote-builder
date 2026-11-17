@@ -26,10 +26,14 @@ export type CustomerOption = {
 };
 
 export type CustomerQuote = {
+  jobKind: "install" | "service";
   jobDescription: string;
   city?: string;
   customer: Customer;
   validDays: number;
+  /** Fraction of the total due as a deposit on installs (e.g. 0.3). */
+  depositPct: number;
+  financing: { termMonths: number; apr: number };
   options: CustomerOption[];
 };
 
@@ -51,10 +55,13 @@ function customerLine(l: QuoteLine): CustomerLine {
 /** Builds the customer quote. Pass option keys to include only some options. */
 export function toCustomerQuote(quote: Quote, only?: OptionKey[]): CustomerQuote {
   return {
+    jobKind: quote.jobKind,
     jobDescription: quote.jobDescription,
     city: quote.city,
     customer: { ...(quote.customer ?? {}) },
     validDays: quote.validDays,
+    depositPct: quote.depositPct,
+    financing: { termMonths: quote.financing.termMonths, apr: quote.financing.apr },
     options: quote.options
       .filter((o) => !only || only.includes(o.key))
       .map((o) => ({

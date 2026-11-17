@@ -179,6 +179,8 @@ export type Quote = {
   peakClub: boolean;
   customer?: Customer;
   validDays: number;
+  /** Install deposit as a fraction of the total (e.g. 0.3). */
+  depositPct: number;
   /** Customer financing offer from pricing_rules.json. */
   financing: { termMonths: number; apr: number };
   options: QuoteOption[];

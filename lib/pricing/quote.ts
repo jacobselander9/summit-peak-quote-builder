@@ -50,6 +50,7 @@ export function buildQuote(data: Dataset, specInput: JobSpecInput, edits: EditsB
     peakClub: spec.peakClub,
     customer: spec.customer,
     validDays: data.rules.quote_valid_days,
+    depositPct: data.rules.install_deposit_pct,
     financing: { termMonths: data.rules.financing.term_months, apr: data.rules.financing.apr },
     options,
   };
