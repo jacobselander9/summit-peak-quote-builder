@@ -1,0 +1,11 @@
+fee_code,name,price,internal_cost,job_type,when_it_applies
+F-TRIP,Trip charge,89,30,service,All service calls; waived for Peak Club
+F-DIAG,Diagnostic fee,119,0,service,Only if customer declines the repair
+F-AFTER,After-hours dispatch,175,60,service,"Calls after 5pm, weekends, holidays"
+F-PRM-LOG,Permit - Logan City (mechanical),145,145,install,Any equipment install in Logan
+F-PRM-CC,Permit - Cache County (unincorporated),165,165,install,Installs outside city limits
+F-PRM-OTH,Permit - other Cache Valley cities,125,125,install,"North Logan, Smithfield, Providence, Hyde Park"
+F-DISP,Old equipment haul-away,75,25,install,Per unit removed
+F-RECOV,Refrigerant recovery,95,20,install,Per system when replacing or opening a sealed system
+F-CRANE,Crane / lift rental,650,550,install,"Rooftop units, half day"
+F-STARTUP,"Startup, commissioning & paperwork",150,30,install,All equipment installs

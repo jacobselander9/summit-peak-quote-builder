@@ -1,0 +1,6 @@
+role_id,role,base_wage,burdened_cost,bill_rate
+senior_service_tech,Senior Service Tech,38,53,165
+service_tech,Service Tech,32,45,145
+lead_installer,Lead Installer,34,48,135
+install_helper,Install Helper,22,31,95
+sheet_metal,Sheet Metal / Duct,30,42,125

@@ -1,0 +1,2613 @@
+{
+  "_notes": "Size keys: tons for AC/system, kBTU for furnace. Items are [sku, qty]. Fees are added by pricing_rules.json, not listed here. Repairs never use tiers.",
+  "I-AC": {
+    "2": {
+      "units_removed": 1,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Standard efficiency AC",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "AC-24-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Standard AC + smart thermostat & media filter",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "AC-24-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "HP-36-15",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "3": {
+      "units_removed": 1,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Standard efficiency AC",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "AC-36-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "High-efficiency two-stage AC",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "AC-36-17",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "HP-36-15",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "4": {
+      "units_removed": 1,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Standard efficiency AC",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "AC-48-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Standard AC + smart thermostat & media filter",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "AC-48-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "HP-48-15",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "5": {
+      "units_removed": 1,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Standard efficiency AC",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Standard AC + smart thermostat & media filter",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Comfort package (smart thermostat, media filter, CO detector)",
+          "labor_job": "I-AC",
+          "items": [
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "CO-DET",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "I-FN": {
+    "60": {
+      "units_removed": 1,
+      "sealed_systems_opened": 0,
+      "tiers": {
+        "good": {
+          "name": "96% furnace, single-stage",
+          "labor_job": "I-FN",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ]
+          ]
+        },
+        "better": {
+          "name": "96% furnace + smart thermostat & media filter",
+          "labor_job": "I-FN",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ]
+          ]
+        },
+        "best": {
+          "name": "97% variable-speed furnace (quietest, most even heat)",
+          "labor_job": "I-FN",
+          "items": [
+            [
+              "FN-80-97V",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "CO-DET",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ]
+          ]
+        }
+      }
+    },
+    "80": {
+      "units_removed": 1,
+      "sealed_systems_opened": 0,
+      "tiers": {
+        "good": {
+          "name": "96% furnace, single-stage",
+          "labor_job": "I-FN",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ]
+          ]
+        },
+        "better": {
+          "name": "96% furnace + smart thermostat & media filter",
+          "labor_job": "I-FN",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ]
+          ]
+        },
+        "best": {
+          "name": "97% variable-speed furnace (quietest, most even heat)",
+          "labor_job": "I-FN",
+          "items": [
+            [
+              "FN-80-97V",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "CO-DET",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ]
+          ]
+        }
+      }
+    },
+    "100": {
+      "units_removed": 1,
+      "sealed_systems_opened": 0,
+      "tiers": {
+        "good": {
+          "name": "96% furnace, single-stage",
+          "labor_job": "I-FN",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ]
+          ]
+        },
+        "better": {
+          "name": "96% furnace + smart thermostat & media filter",
+          "labor_job": "I-FN",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ]
+          ]
+        },
+        "best": {
+          "name": "97% variable-speed furnace (quietest, most even heat)",
+          "labor_job": "I-FN",
+          "items": [
+            [
+              "FN-80-97V",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "CO-DET",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "I-SYS": {
+    "2-60": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-24-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + Standard AC + smart thermostat & media filter",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-24-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Furnace + Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "HP-36-15",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "2-80": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-24-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + Standard AC + smart thermostat & media filter",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-24-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Variable-speed furnace + Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-97V",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "HP-36-15",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "2-100": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-24-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + Standard AC + smart thermostat & media filter",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-24-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Furnace + Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "HP-36-15",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "3-60": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-36-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + High-efficiency two-stage AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-36-17",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Furnace + Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "HP-36-15",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "3-80": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-36-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + High-efficiency two-stage AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-36-17",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Variable-speed furnace + Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-97V",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "HP-36-15",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "3-100": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-36-14",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + High-efficiency two-stage AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-36-17",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Furnace + Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "HP-36-15",
+              1
+            ],
+            [
+              "CL-36",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "4-60": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-48-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + Standard AC + smart thermostat & media filter",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-48-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Furnace + Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "HP-48-15",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "4-80": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-48-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + Standard AC + smart thermostat & media filter",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-48-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Variable-speed furnace + Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-97V",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "HP-48-15",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "4-100": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-48-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + Standard AC + smart thermostat & media filter",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-48-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Furnace + Cold-climate heat pump (cools + heats, backs up your furnace)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "HP-48-15",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "5-60": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + Standard AC + smart thermostat & media filter",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Furnace + Comfort package (smart thermostat, media filter, CO detector)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-60-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "CO-DET",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "5-80": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + Standard AC + smart thermostat & media filter",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Variable-speed furnace + Comfort package (smart thermostat, media filter, CO detector)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-80-97V",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "CO-DET",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    },
+    "5-100": {
+      "units_removed": 2,
+      "sealed_systems_opened": 1,
+      "tiers": {
+        "good": {
+          "name": "Furnace + Standard efficiency AC",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-PROG",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "better": {
+          "name": "Furnace + Standard AC + smart thermostat & media filter",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        },
+        "best": {
+          "name": "Furnace + Comfort package (smart thermostat, media filter, CO detector)",
+          "labor_job": "I-SYS",
+          "items": [
+            [
+              "FN-100-96",
+              1
+            ],
+            [
+              "DUCT-TRN",
+              1
+            ],
+            [
+              "AC-60-14",
+              1
+            ],
+            [
+              "CL-48",
+              1
+            ],
+            [
+              "TS-WIFI",
+              1
+            ],
+            [
+              "FLT-4IN",
+              1
+            ],
+            [
+              "CO-DET",
+              1
+            ],
+            [
+              "PAD-36",
+              1
+            ],
+            [
+              "DISC-60",
+              1
+            ],
+            [
+              "WHIP-6",
+              1
+            ],
+            [
+              "KIT-INST",
+              1
+            ],
+            [
+              "REF-454B",
+              4
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

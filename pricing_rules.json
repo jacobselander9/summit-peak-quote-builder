@@ -1,0 +1,59 @@
+{
+  "effective_date": "2026-11-01",
+  "sell_price_rounding": "round(unit_cost * markup) to whole dollars",
+  "tax_rate": 0.0725,
+  "tax_applies_to": [
+    "parts",
+    "equipment"
+  ],
+  "target_margin": {
+    "install": 0.45,
+    "service": 0.55
+  },
+  "minimum_service_ticket": 189,
+  "warranty_reserve_pct_of_install_price": 0.03,
+  "install_deposit_pct": 0.3,
+  "card_surcharge": {
+    "pct": 0.03,
+    "over": 2500
+  },
+  "financing": {
+    "term_months": 12,
+    "apr": 0,
+    "dealer_fee_pct": 0.06
+  },
+  "quote_valid_days": 30,
+  "peak_club": {
+    "monthly_price": 15,
+    "service_labor_discount": 0.15,
+    "waive_trip_charge": true,
+    "applies_to_installs": false
+  },
+  "permit_by_city": {
+    "Logan": "F-PRM-LOG",
+    "North Logan": "F-PRM-OTH",
+    "Smithfield": "F-PRM-OTH",
+    "Providence": "F-PRM-OTH",
+    "Hyde Park": "F-PRM-OTH",
+    "Cache County (unincorporated)": "F-PRM-CC"
+  },
+  "service_area": [
+    "Logan",
+    "North Logan",
+    "Smithfield",
+    "Providence",
+    "Hyde Park",
+    "Cache County (unincorporated)"
+  ],
+  "install_fees_always": [
+    "F-STARTUP",
+    "permit"
+  ],
+  "install_fees_per_unit_removed": [
+    "F-DISP"
+  ],
+  "install_fees_per_sealed_system_opened": [
+    "F-RECOV"
+  ],
+  "service_fees": "F-TRIP unless Peak Club; F-AFTER for after-hours/weekend/holiday calls; F-DIAG only if the repair is declined"
+}

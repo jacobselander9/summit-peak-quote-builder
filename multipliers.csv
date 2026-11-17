@@ -1,0 +1,7 @@
+id,condition,multiplier,applies_to,notes
+standard,"Standard hours (Mon-Fri, 7am-5pm)",1.0,labor,Default
+after_hours,"After hours (Mon-Fri, 5pm-10pm)",1.5,labor,"Labor only, not parts"
+overnight_weekend,"Overnight, weekends",1.75,labor,Labor only
+holiday,Holidays,2.0,labor,"New Year, July 4, Pioneer Day, Thanksgiving, Christmas"
+attic_crawl,Crawlspace / attic access,1.25,labor,On hours spent in the space
+peak_club,Peak Club members,0.85,service_labor,15% off repair labor; not installs

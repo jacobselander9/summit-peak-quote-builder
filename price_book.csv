@@ -1,0 +1,41 @@
+sku,description,category,unit,supplier,unit_cost,markup,sell_price,on_hand,reorder_at
+AC-24-14,"2-ton AC condenser, 14.3 SEER2, single-stage",Equipment - Air Conditioners (R-454B),ea,Wasatch Supply Co.,1850.00,1.90,3515,3,2
+AC-36-14,"3-ton AC condenser, 14.3 SEER2, single-stage",Equipment - Air Conditioners (R-454B),ea,Wasatch Supply Co.,2250.00,1.90,4275,4,2
+AC-48-14,"4-ton AC condenser, 14.3 SEER2, single-stage",Equipment - Air Conditioners (R-454B),ea,Wasatch Supply Co.,2780.00,1.90,5282,2,2
+AC-60-14,"5-ton AC condenser, 14.3 SEER2, single-stage",Equipment - Air Conditioners (R-454B),ea,Wasatch Supply Co.,3240.00,1.90,6156,1,1
+AC-36-17,"3-ton AC condenser, 17 SEER2, two-stage",Equipment - Air Conditioners (R-454B),ea,Wasatch Supply Co.,3650.00,1.85,6752,1,1
+HP-36-15,"3-ton cold-climate heat pump, 15.2 SEER2",Equipment - Heat Pumps & Ductless,ea,Intermountain HVAC Wholesale,3900.00,1.85,7215,2,1
+HP-48-15,"4-ton cold-climate heat pump, 15.2 SEER2",Equipment - Heat Pumps & Ductless,ea,Intermountain HVAC Wholesale,4550.00,1.85,8418,1,1
+MS-12K,"12k BTU ductless mini-split, single zone",Equipment - Heat Pumps & Ductless,ea,Intermountain HVAC Wholesale,1480.00,1.85,2738,3,2
+MS-24K,"24k BTU ductless mini-split, single zone",Equipment - Heat Pumps & Ductless,ea,Intermountain HVAC Wholesale,2150.00,1.85,3978,2,1
+FN-60-96,"60k BTU gas furnace, 96% AFUE, single-stage","Equipment - Furnaces, Air Handlers & Coils",ea,Wasatch Supply Co.,1650.00,1.90,3135,3,2
+FN-80-96,"80k BTU gas furnace, 96% AFUE, single-stage","Equipment - Furnaces, Air Handlers & Coils",ea,Wasatch Supply Co.,1820.00,1.90,3458,4,2
+FN-100-96,"100k BTU gas furnace, 96% AFUE, single-stage","Equipment - Furnaces, Air Handlers & Coils",ea,Wasatch Supply Co.,2050.00,1.90,3895,2,1
+FN-80-97V,"80k BTU gas furnace, 97% AFUE, variable-speed","Equipment - Furnaces, Air Handlers & Coils",ea,Wasatch Supply Co.,2950.00,1.85,5458,1,1
+AH-36,3-ton multi-position air handler,"Equipment - Furnaces, Air Handlers & Coils",ea,Intermountain HVAC Wholesale,1350.00,1.90,2565,2,1
+CL-36,3-ton cased evaporator coil,"Equipment - Furnaces, Air Handlers & Coils",ea,Wasatch Supply Co.,780.00,1.90,1482,3,2
+CL-48,4-ton cased evaporator coil,"Equipment - Furnaces, Air Handlers & Coils",ea,Wasatch Supply Co.,920.00,1.90,1748,2,1
+LS-38-34-25,"Line set 3/8 x 3/4, 25 ft, insulated",Install Materials,ea,Bear River Distributors,165.00,1.80,297,8,4
+LS-38-78-50,"Line set 3/8 x 7/8, 50 ft, insulated",Install Materials,ea,Bear River Distributors,310.00,1.80,558,4,2
+PAD-36,"Condenser pad, 36 x 36 composite",Install Materials,ea,Bear River Distributors,48.00,2.00,96,10,4
+DISC-60,60A non-fused disconnect,Install Materials,ea,Bear River Distributors,22.00,2.50,55,15,6
+WHIP-6,"Electrical whip, 3/4 in, 6 ft",Install Materials,ea,Bear River Distributors,18.00,2.50,45,15,6
+PUMP-CND,Condensate pump with safety switch,Install Materials,ea,Bear River Distributors,75.00,2.00,150,6,3
+DUCT-TRN,Plenum / transition fabrication materials,Install Materials,job,Bear River Distributors,120.00,2.00,240,,
+KIT-INST,"Install consumables kit (brazing rod, nitrogen, mastic, tape, fittings)",Install Materials,job,Bear River Distributors,85.00,2.00,170,12,5
+CO-DET,Plug-in CO detector,Install Materials,ea,Bear River Distributors,28.00,2.50,70,12,6
+REF-454B,R-454B refrigerant (new systems),Refrigerant,lb,Wasatch Supply Co.,22.00,3.00,66,60,25
+REF-410A,R-410A refrigerant (service on existing systems only),Refrigerant,lb,Wasatch Supply Co.,38.00,3.00,114,45,20
+TS-PROG,"Programmable thermostat, 7-day",Thermostats & Filters,ea,Bear River Distributors,55.00,2.50,138,10,4
+TS-WIFI,Smart Wi-Fi thermostat,Thermostats & Filters,ea,Bear River Distributors,165.00,2.00,330,6,3
+FLT-1IN,"Pleated filter 16 x 25 x 1, MERV 8",Thermostats & Filters,ea,Bear River Distributors,6.00,3.00,18,48,24
+FLT-4IN,"Media filter 16 x 25 x 4, MERV 11",Thermostats & Filters,ea,Bear River Distributors,32.00,2.50,80,20,10
+CAP-45-5,"Dual run capacitor, 45/5 uF, 440V",Repair Parts,ea,Intermountain HVAC Wholesale,14.00,4.00,56,25,10
+CAP-35-5,"Dual run capacitor, 35/5 uF, 440V",Repair Parts,ea,Intermountain HVAC Wholesale,13.00,4.00,52,25,10
+CONT-2P30,"Contactor, 2-pole, 30A, 24V coil",Repair Parts,ea,Intermountain HVAC Wholesale,18.00,3.50,63,20,8
+MTR-CF14,"Condenser fan motor, 1/4 HP, 1075 RPM",Repair Parts,ea,Intermountain HVAC Wholesale,135.00,2.25,304,4,2
+MTR-BL12,"Blower motor, 1/2 HP, ECM",Repair Parts,ea,Intermountain HVAC Wholesale,410.00,2.00,820,2,1
+IGN-HSI,"Hot surface igniter, universal",Repair Parts,ea,Intermountain HVAC Wholesale,32.00,3.50,112,12,5
+SNS-FLM,"Flame sensor, universal",Repair Parts,ea,Intermountain HVAC Wholesale,14.00,4.00,56,12,5
+BRD-IFC,Universal furnace control board,Repair Parts,ea,Intermountain HVAC Wholesale,185.00,2.25,416,3,2
+TXV-36,"TXV valve, 3-ton, R-410A/R-454B",Repair Parts,ea,Intermountain HVAC Wholesale,95.00,2.50,238,3,2

@@ -1,0 +1,21 @@
+job_code,description,job_type,hours_per_person,roles
+I-AC,AC condenser + coil replacement (like-for-like),install,5.0,lead_installer;install_helper
+I-FN,Gas furnace replacement,install,6.0,lead_installer;install_helper
+I-SYS,Full split system (furnace + AC + coil),install,10.0,lead_installer;install_helper
+I-HP,Heat pump + air handler system,install,10.0,lead_installer;install_helper
+I-MS1,"Ductless mini-split, single zone",install,6.0,lead_installer;install_helper
+I-MS+,Each additional mini-split zone,install,4.0,lead_installer;install_helper
+A-LS,Add: replace line set,addon,1.5,lead_installer;install_helper
+A-DUCT,Add: duct / plenum modification,addon,4.0,sheet_metal
+A-PUMP,Add: condensate pump,addon,1.0,lead_installer
+S-DIAG,Diagnostic (first hour),service,1.0,service_tech
+S-TUNE,Seasonal tune-up (heat or cool),service,1.25,service_tech
+S-CAP,Replace capacitor,service,0.5,service_tech
+S-CONT,Replace contactor,service,0.75,service_tech
+S-CFM,Replace condenser fan motor,service,1.5,service_tech
+S-BLW,Replace blower motor,service,2.0,senior_service_tech
+S-IGN,Replace igniter or flame sensor,service,0.75,service_tech
+S-BRD,Replace furnace control board,service,1.5,senior_service_tech
+S-LEAK,Refrigerant leak search,service,2.0,senior_service_tech
+S-TXV,Replace TXV (incl. recover / evacuate),service,4.0,senior_service_tech
+S-TSTAT,Install thermostat (smart: +0.5 hr),service,1.0,service_tech

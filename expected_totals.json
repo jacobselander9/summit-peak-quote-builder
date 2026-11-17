@@ -1,0 +1,110 @@
+{
+  "1_logan_3ton_ac": {
+    "good": {
+      "parts": 6525,
+      "labor": 1150.0,
+      "fees": 465,
+      "min_adj": 0,
+      "subtotal": 8140.0,
+      "tax": 473.06,
+      "total": 8613.06,
+      "job_cost": 4205.2,
+      "margin": 0.4834,
+      "passes": true,
+      "deposit": 2583.92
+    },
+    "better": {
+      "parts": 9274,
+      "labor": 1150.0,
+      "fees": 465,
+      "min_adj": 0,
+      "subtotal": 10889.0,
+      "tax": 672.37,
+      "total": 11561.37,
+      "job_cost": 5829.67,
+      "margin": 0.4646,
+      "passes": true,
+      "deposit": 3468.41
+    },
+    "best": {
+      "parts": 9737,
+      "labor": 1150.0,
+      "fees": 465,
+      "min_adj": 0,
+      "subtotal": 11352.0,
+      "tax": 705.93,
+      "total": 12057.93,
+      "job_cost": 6093.56,
+      "margin": 0.4632,
+      "passes": true,
+      "deposit": 3617.38
+    }
+  },
+  "2_north_logan_full_system": {
+    "good": {
+      "parts": 10223,
+      "labor": 2300.0,
+      "fees": 520,
+      "min_adj": 0,
+      "subtotal": 13043.0,
+      "tax": 741.17,
+      "total": 13784.17,
+      "job_cost": 6692.29,
+      "margin": 0.4869,
+      "passes": true,
+      "deposit": 4135.25
+    },
+    "better": {
+      "parts": 12972,
+      "labor": 2300.0,
+      "fees": 520,
+      "min_adj": 0,
+      "subtotal": 15792.0,
+      "tax": 940.47,
+      "total": 16732.47,
+      "job_cost": 8316.76,
+      "margin": 0.4734,
+      "passes": true,
+      "deposit": 5019.74
+    },
+    "best": {
+      "parts": 15435,
+      "labor": 2300.0,
+      "fees": 520,
+      "min_adj": 0,
+      "subtotal": 18255.0,
+      "tax": 1119.04,
+      "total": 19374.04,
+      "job_cost": 9770.65,
+      "margin": 0.4648,
+      "passes": true,
+      "deposit": 5812.21
+    }
+  },
+  "3_smithfield_capacitor_peak_club": {
+    "parts": 56,
+    "labor": 61.63,
+    "fees": 0,
+    "min_adj": 71.37,
+    "subtotal": 189.0,
+    "tax": 4.06,
+    "total": 193.06,
+    "job_cost": 36.5,
+    "margin": 0.8069,
+    "passes": true,
+    "deposit": null
+  },
+  "4_providence_saturday_igniter": {
+    "parts": 112,
+    "labor": 190.31,
+    "fees": 264,
+    "min_adj": 0,
+    "subtotal": 566.31,
+    "tax": 8.12,
+    "total": 574.43,
+    "job_cost": 155.75,
+    "margin": 0.725,
+    "passes": true,
+    "deposit": null
+  }
+}
